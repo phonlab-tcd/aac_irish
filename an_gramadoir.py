@@ -85,11 +85,11 @@ def process_errors(text, errors):
                 context = context[0:mx] + word + context[tx+1:]
                 tx_offset = (tx+1-mx - len(word))
             elif ruleId == "CLAOCHLU" and message == "Initial mutation missing":
-                context = context[mx:tx+1].split(" ")
+                context_ = context[mx:tx+1].split(" ")
                 index = 0
                 uru = ""
                 initial_letter = ""
-                for word in context:
+                for word in context_:
                     if word in ["na", "an","Na", "An"]:
                         index += len(word) +1
                         continue
@@ -113,7 +113,7 @@ def process_errors(text, errors):
                 elif initial_letter == "f" or initial_letter == "F":
                     uru = "bh"
                 if uru:
-                    context = context[0:mx+index] + uru + context[mx+index:]
+                    context = context[:mx+index] + uru + context[mx+index:]
                     tx_offset += len(uru)
             elif re.search("CAIGHDEAN",ruleId):
                 substitute = ruleId.replace("CAIGHDEAN{","").replace("}","")
