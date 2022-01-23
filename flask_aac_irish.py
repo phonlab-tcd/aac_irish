@@ -22,10 +22,6 @@ def home_page():
         with open(f"temp_{number}.mp3","wb") as f:
             f.write(sound_file)
         return send_file(f"temp_{number}.mp3",mimetype="audio/mp3")
-        return {
-            "text": corrected_text,
-            "sound_file": json.dumps(sound_file.decode("base64"))
-        }
     return '''
         <form method="post">
             <p><input type=text name=text>
@@ -42,5 +38,21 @@ def home_page():
              <option value="irish_9">ga_MU_cmg_nnmnkwii</option>
              </select> 
             <p><input type=submit value=Submit>
+        </form>
+        '''
+
+@app.route('/corrector', methods=['POST', 'GET'])
+def home_page():
+    from flask import request
+    if request.method == 'POST':
+        text = request.form['text']
+        from an_gramadoir import correct_errors_in_text
+        corrected_text = correct_errors_in_text(text)
+        return {
+            "text": corrected_text,
+        }
+    return '''
+        <form method="post">
+            <p><input type=text name=text>
         </form>
         '''
