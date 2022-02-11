@@ -9,19 +9,13 @@ def home_page():
         text = request.form['text']
         voice_type = request.form['voice']
         from tts_corrector import tts_corrector
-        corrected_text, sound_file = tts_corrector(text, voice_type)
-        print(corrected_text)
+        _, sound_file = tts_corrector(text, voice_type)
+        import io
+        mem = io.BytesIO()
+        mem.write(sound_file.content)
+        mem.seek(0)
         from flask import send_file
-        number = 0
-        import os
-        while True:
-            if os.path.isfile(f"temp_{number}.mp3"):
-                number += 1
-            else:
-                break  
-        with open(f"temp_{number}.mp3","wb") as f:
-            f.write(sound_file)
-        return send_file(f"temp_{number}.mp3",mimetype="audio/mp3")
+        return send_file(mem, mimetype="audio/mp3")
     return '''
         <form method="post">
             <p><input type=text name=text>
@@ -41,8 +35,9 @@ def home_page():
         </form>
         '''
 
+
 @app.route('/corrector', methods=['POST', 'GET'])
-def home_page():
+def corrector():
     from flask import request
     if request.method == 'POST':
         text = request.form['text']
@@ -54,5 +49,49 @@ def home_page():
     return '''
         <form method="post">
             <p><input type=text name=text>
+        </form>
+        '''
+
+
+@app.route('/voice', methods=['POST', 'GET'])
+def voice():
+    from flask import request
+    if request.method == 'POST':
+        text = request.form['text']
+        voice_type = request.form['voice']
+        alpha = request.form['alpha']
+        all_pass_filter = request.form['filter']
+        from tts_corrector import tts_corrector_with_hts_params
+        _, sound_file = tts_corrector_with_hts_params(text, voice_type,alpha,all_pass_filter)
+        import io
+        mem = io.BytesIO()
+        mem.write(sound_file.content)
+        mem.seek(0)
+        from flask import send_file
+        return send_file(mem, mimetype="audio/mp3")
+    return '''
+        <form method="post">
+            <p><input type=text name=text>
+             <label for="voice">Choose a voice:</label>
+             <select id="voice" name="voice">
+             <option value="irish_1">Ulster</option>
+             <option value="irish_3">Connacht 1</option>
+             <option value="irish_5">Connacht 2</option>
+             <option value="irish_7">Munster</option>
+             </select> 
+             <br>
+            <label for="alpha">All-pass constant (between 0.2 and 0.6):</label>
+             <br>
+            <input type="range" id="alpha" name="alpha" value="0.4" min="0.2" max="0.6" step=0.01 oninput="this.nextElementSibling.value = this.value">
+            Value:
+            <output></output>
+            <br><br>
+            <label for="filter">Filter (between -20 and 20):</label>
+             <br>
+            <input type="range" id="filter" name="filter" value="0" min="-20" max="20" step=0.1 oninput="this.nextElementSibling.value = this.value">
+            Value:
+            <output></output>
+            <br><br>
+            <p><input type=submit value=Submit>
         </form>
         '''
