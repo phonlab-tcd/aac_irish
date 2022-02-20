@@ -10,9 +10,13 @@ def home_page():
         voice_type = request.form['voice']
         from tts_corrector import tts_corrector
         _, sound_file = tts_corrector(text, voice_type)
+        file = sound_file.json()
+        sound = file["audioContent"]
+        import base64
+        sound_ = base64.b64decode(sound)
         import io
         mem = io.BytesIO()
-        mem.write(sound_file.content)
+        mem.write(sound_)
         mem.seek(0)
         from flask import send_file
         return send_file(mem, mimetype="audio/mp3")
@@ -63,9 +67,13 @@ def voice():
         all_pass_filter = request.form['filter']
         from tts_corrector import tts_corrector_with_hts_params
         _, sound_file = tts_corrector_with_hts_params(text, voice_type,alpha,all_pass_filter)
+        file = sound_file.json()
+        sound = file["audioContent"]
+        import base64
+        sound_ = base64.b64decode(sound)
         import io
         mem = io.BytesIO()
-        mem.write(sound_file.content)
+        mem.write(sound_)
         mem.seek(0)
         from flask import send_file
         return send_file(mem, mimetype="audio/mp3")
