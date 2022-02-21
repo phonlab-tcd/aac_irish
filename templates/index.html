@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+
+  <form method="post">
+    <p><input type=text name=text>
+      <label for="voice">Choose a voice:</label>
+      <select id="voice" name="voice">
+        <option value="irish_1">Ulster</option>
+        <option value="irish_3">Connacht 1</option>
+        <option value="irish_5">Connacht 2</option>
+        <option value="irish_7">Munster</option>
+      </select>
+      <br>
+      <label for="alpha">All-pass constant (between 0.2 and 0.6):</label>
+      <br>
+      <input type="range" id="alpha" name="alpha" value="0.4" min="0.2" max="0.6" step=0.01
+        oninput="this.nextElementSibling.value = this.value">
+      Value:
+      <output></output>
+      <br><br>
+      <label for="filter">Filter (between -20 and 20):</label>
+      <br>
+      <input type="range" id="filter" name="filter" value="0" min="-20" max="20" step=0.1
+        oninput="this.nextElementSibling.value = this.value">
+      Value:
+      <output></output>
+      <br><br>
+    <p><input type=submit value=Submit>
+  </form>
+  <audio controls>
+    <source src="{{url_for("static",filename=filename)}}" type="audio/mp3">
+  </audio>
+</body>
+
+</html>

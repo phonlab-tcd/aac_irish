@@ -1,6 +1,7 @@
-from flask import Flask
+from flask import Flask, render_template
+import os
 app = Flask(__name__)
-
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 @app.route('/', methods=['POST', 'GET'])
 def home_page():
@@ -17,27 +18,16 @@ def home_page():
         import io
         mem = io.BytesIO()
         mem.write(sound_)
-        mem.seek(0)
-        from flask import send_file
-        return send_file(mem, mimetype="audio/mp3")
-    return '''
-        <form method="post">
-            <p><input type=text name=text>
-             <label for="voice">Choose a voice:</label>
-             <select id="voice" name="voice">
-             <option value="irish_1">ga_UL_anb_exthts</option>
-             <option value="irish_2">ga_UL_anb_nnmnkwii</option>
-             <option value="irish_3">ga_CO_pmc_exthts</option>
-             <option value="irish_4">ga_CO_pmg_nnmnkwii</option>
-             <option value="irish_5">ga_CO_snc_exthts</option>
-             <option value="irish_6">ga_CO_snc_nnmnkwii</option>
-             <option value="irish_7">ga_MU_nnc_exthts</option>
-             <option value="irish_8">ga_MU_nnc_nnmnkwii</option>
-             <option value="irish_9">ga_MU_cmg_nnmnkwii</option>
-             </select> 
-            <p><input type=submit value=Submit>
-        </form>
-        '''
+        mem.seek(0)        
+        from datetime import datetime
+        now = datetime.now()
+        date_time = now.strftime("%m%d%Y%H%M%S")
+        filename = f"sound_{date_time}.mp3"
+        filename_to_save = os.path.join(basedir,"static/sounds", filename)
+        with open(filename_to_save, "wb") as file_to_save:
+            file_to_save.write(sound_)
+        return render_template("main_index.html",filename=f"/sounds/{filename}")
+    return render_template("main_index.html")
 
 
 @app.route('/corrector', methods=['POST', 'GET'])
@@ -75,31 +65,12 @@ def voice():
         mem = io.BytesIO()
         mem.write(sound_)
         mem.seek(0)
-        from flask import send_file
-        return send_file(mem, mimetype="audio/mp3")
-    return '''
-        <form method="post">
-            <p><input type=text name=text>
-             <label for="voice">Choose a voice:</label>
-             <select id="voice" name="voice">
-             <option value="irish_1">Ulster</option>
-             <option value="irish_3">Connacht 1</option>
-             <option value="irish_5">Connacht 2</option>
-             <option value="irish_7">Munster</option>
-             </select> 
-             <br>
-            <label for="alpha">All-pass constant (between 0.2 and 0.6):</label>
-             <br>
-            <input type="range" id="alpha" name="alpha" value="0.4" min="0.2" max="0.6" step=0.01 oninput="this.nextElementSibling.value = this.value">
-            Value:
-            <output></output>
-            <br><br>
-            <label for="filter">Filter (between -20 and 20):</label>
-             <br>
-            <input type="range" id="filter" name="filter" value="0" min="-20" max="20" step=0.1 oninput="this.nextElementSibling.value = this.value">
-            Value:
-            <output></output>
-            <br><br>
-            <p><input type=submit value=Submit>
-        </form>
-        '''
+        from datetime import datetime
+        now = datetime.now()
+        date_time = now.strftime("%m%d%Y%H%M%S")
+        filename = f"sound_{date_time}.mp3"
+        filename_to_save = os.path.join(basedir,"static/sounds", filename)
+        with open(filename_to_save, "wb") as file_to_save:
+            file_to_save.write(sound_)
+        return render_template("index.html",filename=f"/sounds/{filename}")
+    return render_template("index.html")
