@@ -18,16 +18,23 @@ def home_page():
         import io
         mem = io.BytesIO()
         mem.write(sound_)
-        mem.seek(0)        
-        from datetime import datetime
-        now = datetime.now()
-        date_time = now.strftime("%m%d%Y%H%M%S")
-        filename = f"sound_{date_time}.mp3"
-        filename_to_save = os.path.join(basedir,"static/sounds", filename)
-        with open(filename_to_save, "wb") as file_to_save:
-            file_to_save.write(sound_)
-        return render_template("main_index.html",filename=f"/sounds/{filename}")
-    return render_template("main_index.html")
+        mem.seek(0)
+        from flask import send_file
+        return send_file(mem, mimetype="audio/mp3")
+    return '''
+        <form method="post">
+            <p><input type=text name=text>
+             <label for="voice">Choose a voice:</label>
+             <select id="voice" name="voice">
+             <option value="Ulster">Ulster</option>
+             <option value="Connaught">Connaught</option>
+             <option value="Connaught (girl)">Connaught (girl)</option>
+             <option value="Connaught (boy)">Connaught (boy)</option>
+             <option value="Munster">Munster</option>
+             </select> 
+            <p><input type=submit value=Submit>
+        </form>
+        '''
 
 
 @app.route('/corrector', methods=['POST', 'GET'])
