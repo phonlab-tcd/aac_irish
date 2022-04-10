@@ -90,13 +90,19 @@ def possessive_pronoun_correction(text):
 
 def ba_case(text):
     ba = "[ba|Ba]"
+    ni = "[ní|Ní]"
+    not_ni = "[^ní]"
     b = "[b|B]"
+    f = "[F|f]"
+    n = "[^Nn]"
     consonants = "[B|b|C|c|D|d|G|g|M|m|P|p|S|s|T|t]"
     vowel = "[A|a|O|o|U|u|I|i|E|e|Á|É|Í|Ó|Ú|á|é|í|ó|ú]"
-    text = re.sub(f"({ba}) ({consonants})", "\g<1> \g<2>h",text)
-    text = re.sub(f"({b})a ({vowel})", "\g<1>'\g<2>",text)
-    text = re.sub(f"({b})a f({vowel})", "\g<1>'fh\g<2>",text)
-    text = re.sub(f"({ba}) f({consonants})", "\g<1> fh\g<2>",text)
+    #comparative and superlative cases
+    text = re.sub(f"({ni}) ba f({vowel})","\g<1> b'fh\g<2>",text)
+    text = re.sub(f"([^ní]) ba f({vowel})","\g<1> ab fh\g<2>",text)
+    text = re.sub(f"ba ({consonants})","ba \g<1>h",text)
+    text = re.sub(f"({ni}) ba ({vowel})","\g<1> b'\g<2>",text)
+    text = re.sub(f"([^ní]) ba ({vowel})","\g<1> ab \g<2>",text)
     return text
 
 def adjective_correction(text):
@@ -107,13 +113,13 @@ def adjective_correction(text):
     text_words = text.split(" ")
     text_words_copy = text_words.copy()
     for index, word in enumerate(text_words_copy):
-        if word in ["Níos","níos","is","Is","ní","Ní"]:
+        if word in ["Níos","níos","is","Is","ní","Ní","Ba","ba"]:
             past_offset = 0
             punctuation = ""
             if index +2 < len(text_words_copy):
                 if text_words_copy[index+1] == "ba":
                     past_offset = 1
-                text_words[index] = text_words[index][:2]
+                    text_words[index] = text_words[index][:2]
             if index +1 < len(text_words_copy):
                 if len(text_words_copy[index+1+past_offset]) > 1:
                     if text_words_copy[index+1+past_offset][0] in [".",",","?","\"","\'",":",";","!"]:
@@ -173,7 +179,7 @@ def adjective_correction(text):
                     text_words[index+1+past_offset] = re.sub(f"({leathan})({consonants})$","\g<1>i\g<2>e",text_words[index+1+past_offset])
                     text_words[index+1+past_offset] = re.sub(f"({leathan})({consonants})$","\g<1>i\g<2>e",text_words[index+1+past_offset])
                     text_words[index+1+past_offset] = re.sub(f"({leathan})({consonants})$","\g<1>i\g<2>e",text_words[index+1+past_offset])
-            text_words[index+1+past_offset] += punctuation
+                text_words[index+1+past_offset] += punctuation
     text = ba_case(" ".join(text_words))           
     return text
 

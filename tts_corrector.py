@@ -23,9 +23,13 @@ def correct_text(text):
     return corrected_text
 
 if __name__ == "__main__":
-    print(correct_text("An gheobhaidh muid a' cóta ó fear an post?"))
-    print(correct_text("An bhfuil sé níos cairdiúil?"))
-    print(correct_text("An bhfuil sé níos maith?"))
-    print(correct_text("An bhfuil sé níos ba maith?"))
-    print(correct_text("An bhfuil sé níos daor?"))
-    print(correct_text("An bhfuil sé níos ba cairdiúil?"))
+    #print(correct_text("An gheobhaidh muid a' cóta ó fear an post?"))
+    #print(correct_text("An bhfuil sé níos cairdiúil ná mé?"))
+    #print(correct_text("An bhfuil sé níos furasta ná mé?"))
+    print(correct_text("An bhfuil sé níos ba furasta ná mé?"))
+    print(correct_text("An bhfuil sé níos ba aisteach ná mé?"))
+    print(correct_text("An bhfuil sé ba furasta ná mé?"))
+    print(correct_text("An bhfuil sé ba ionraic ná mé?"))
+    #print(correct_text("An bhfuil sé níos daor ná mé?"))
+    print(correct_text("An bhfuil sé níos ba cairdiúil ná mé?"))
+    #print(correct_text("An bhfuil an bean anseo?"))
