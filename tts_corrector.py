@@ -1,6 +1,6 @@
 from abair_voice import get_voice, get_voice_hts_params
 from an_gramadoir import an_gramadoir_parser
-from morphological_correction import morphological_parser
+from morphological_parser import morphological_parser
 from genitive_parser import genitive_parser
 
 
@@ -21,5 +21,4 @@ def correct_text(text):
     return corrected_text
 
 if __name__ == "__main__":
-    print(correct_text("An dúnann tú é?"))
-    print(correct_text("Ar d'ol tú é?"))
+    pass

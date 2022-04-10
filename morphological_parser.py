@@ -1,20 +1,22 @@
 import re
 def dependent_forms(text):
     #past
-    #present
+    text = re.sub("([an|nach]) rinne", "\g<1> ndearna", text)
+    text = re.sub("ní rinne", "ní dhearna", text)
+    text = re.sub("([an|nach]) dúirt", "\g<1> ndúirt", text)
+    text = re.sub("([an|nach]) chuaigh", "\g<1> ndeachaigh", text)
+    text = re.sub("([an|ní|nach]) bhí", "\g<1> raibh", text)
+    text = re.sub("([an|nach]) chonaic", "\g<1> bhfaca", text)
+    text = re.sub("ní chonaic", "ní fhaca", text)
+    text = re.sub("ní chuaigh", "ní dheachaigh", text)
     #future
     text = re.sub("ní gheobhaidh", "ní bhfaighidh", text)
     text = re.sub("an gheobhaidh", "an bhfaighidh", text)
     text = re.sub("Ní gheobhaidh", "Ní bhfaighidh", text)
     text = re.sub("An gheobhaidh", "An bhfaighidh", text)
-    #command
-    #mc
-    #gc
     return text
 
 def synthetic_verbs(text):
-    #past
-
     #present
         #singular
     text = re.sub("(\b|^)tá mé", "\g<1>táim", text)
@@ -36,7 +38,6 @@ def synthetic_verbs(text):
     text = re.sub("íonn muid", "ímid", text)
 
     #future
-        #plural
     text = re.sub("(\b|^)eidh muid", "\g<1>eimid", text)
     text = re.sub("eidh muid", "eimid", text)
     text = re.sub("faighidh muid(\W|$)", "faighimid\g<1>", text)
@@ -46,16 +47,44 @@ def synthetic_verbs(text):
     text = re.sub("óidh muid", "óimid", text)
     text = re.sub("eoidh muid", "eoimid", text)
 
-    #future
-
-    #command
-
-    # v-iol
-
     #mc
-
+    #aon siollach
+    text = re.sub("feadh mé","finn",text)
+    text = re.sub("feadh tú","feá",text)
+    text = re.sub("feadh muid","fimis",text)
+    text = re.sub("feadh siad","fidís",text)
+    text = re.sub("fadh mé","fainn",text)
+    text = re.sub("fadh tú","fá",text)
+    text = re.sub("fadh muid","faimis",text)
+    text = re.sub("fadh siad","faidís",text)
+    #dhá shiollach
+    text = re.sub("feodh mé","eoinn",text)
+    text = re.sub("feodh tú","eofá",text)
+    text = re.sub("feodh muid","eoimis",text)
+    text = re.sub("feodh siad","eoidís",text)
+    text = re.sub("fódh mé","fóinn",text)
+    text = re.sub("fódh tú","ófá",text)
+    text = re.sub("fódh muid","óimis",text)
+    text = re.sub("fódh siad","óidís",text)
     #gc
-
+    #aon siollach
+    text = re.sub("eadh mé","inn",text)
+    text = re.sub("eadh tú","teá",text)
+    text = re.sub("eadh muid","imis",text)
+    text = re.sub("eadh siad","idís",text)
+    text = re.sub("adh mé","ainn",text)
+    text = re.sub("adh tú","tá",text)
+    text = re.sub("adh muid","aimis",text)
+    text = re.sub("adh siad","aidís",text)
+    #dhá shiollach
+    text = re.sub("aíodh mé","aínn",text)
+    text = re.sub("aíodh tú","aíteá",text)
+    text = re.sub("aíodh muid","aímis",text)
+    text = re.sub("aíodh siad","aídís",text)
+    text = re.sub("íodh mé","ínn",text)
+    text = re.sub("íodh tú","íteá",text)
+    text = re.sub("íodh muid","ímis",text)
+    text = re.sub("íodh siad","ídís",text)
     return text
 
 
