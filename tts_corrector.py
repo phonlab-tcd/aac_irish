@@ -1,13 +1,16 @@
 from abair_voice import get_voice, get_voice_hts_params
 from an_gramadoir import correct_errors_in_text
+from morphological_correction import text_correction
 
 def tts_corrector(text,voice_type):
-    corrected_text = correct_errors_in_text(text)
+    morphologically_corrected  = text_correction(text)
+    corrected_text = correct_errors_in_text(morphologically_corrected)
     sound_file = get_voice(corrected_text,voice_type)
     return corrected_text, sound_file
 
 def tts_corrector_with_hts_params(text,voice_type,alpha,all_pass_filter):
-    corrected_text = correct_errors_in_text(text)
+    morphologically_corrected  = text_correction(text)
+    corrected_text = correct_errors_in_text(morphologically_corrected)
     sound_file = get_voice_hts_params(corrected_text,voice_type,alpha,all_pass_filter)
     return corrected_text, sound_file
 

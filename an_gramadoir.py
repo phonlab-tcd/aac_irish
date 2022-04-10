@@ -90,6 +90,8 @@ def process_errors(text, errors):
                 uru = ""
                 initial_letter = ""
                 for word in context_:
+                    if word == "":
+                        continue
                     if word in ["na", "an","Na", "An"]:
                         index += len(word) +1
                         continue

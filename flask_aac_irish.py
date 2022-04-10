@@ -81,3 +81,8 @@ def voice():
             file_to_save.write(sound_)
         return render_template("index.html",filename=f"/sounds/{filename}")
     return render_template("index.html")
+
+
+if __name__ == "__main__":
+    app.debug = True
+    app.run()
