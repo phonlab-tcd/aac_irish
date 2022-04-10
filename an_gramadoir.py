@@ -122,8 +122,7 @@ def an_gramadoir_parser(text):
     return final_text
 
 def main():
-    x = an_gramadoir_parser("Dia Dhuit. Conas atá tú ar an bord? An bhfuil tú go maith ag an farraige?")
-    print(x)
+    pass
 
 if __name__ == "__main__":
     main()

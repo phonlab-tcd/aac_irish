@@ -58,6 +58,7 @@ def synthetic_verbs(text):
 
     return text
 
+
 def verb_correction(text):
     text = dependent_forms(text)
     text  = synthetic_verbs(text)
@@ -130,6 +131,7 @@ def adjective_correction(text):
                         text_words_copy[index+1+past_offset] = text_words_copy[index+1+past_offset][:-1]
                 if text_words_copy[index+1+past_offset] in ["é","í","iad","muid"]:
                     break
+                #irregular
                 if text_words_copy[index+1+past_offset] == "álainn":
                     text_words[index+1+past_offset] = "áille"
                 elif text_words_copy[index+1+past_offset] == "beag":
@@ -167,6 +169,7 @@ def adjective_correction(text):
                 elif text_words_copy[index+1+past_offset] == "nua":
                     text_words[index+1+past_offset] = "nuaí"
                 else:
+                    #regular
                     text_words[index+1+past_offset] = re.sub(f"air$","ra",text_words_copy[index+1+past_offset])
                     text_words[index+1+past_offset] = re.sub(f"each$","í",text_words[index+1+past_offset])
                     text_words[index+1+past_offset] = re.sub(f"ach$","aí",text_words[index+1+past_offset])
@@ -190,68 +193,6 @@ def morphological_parser(text):
     return text
 
 def main():
-    #possessive tests
-    print("---possessive pronoun first person masculine singular test ---")
-    print(morphological_parser("Tá a cóta ann."))
-    print(morphological_parser("Tá a Cóta ann."))
-    print(morphological_parser("Tá a Dóta ann."))
-    print(morphological_parser("Tá a dóta ann."))
-    print(morphological_parser("Tá a Fóta ann."))
-    print(morphological_parser("Tá a fóta ann."))
-    print(morphological_parser("Tá a Góta ann."))
-    print(morphological_parser("Tá a góta ann."))
-    print(morphological_parser("Tá a Móta ann."))
-    print(morphological_parser("Tá a móta ann."))
-    print(morphological_parser("Tá a Póta ann."))
-    print(morphological_parser("Tá a póta ann."))
-    print(morphological_parser("Tá a Sóta ann."))
-    print(morphological_parser("Tá a sóta ann."))
-    print(morphological_parser("Tá a Tóta ann."))
-    print(morphological_parser("Tá a tóta ann."))
-    print("---possessive pronoun second person singular test ---")
-    print(morphological_parser("Tá a, bóta ann."))
-    print(morphological_parser("Tá a, Bóta ann."))
-    print(morphological_parser("Tá a, cóta ann."))
-    print(morphological_parser("Tá a, Cóta ann."))
-    print(morphological_parser("Tá a, dóta ann."))
-    print(morphological_parser("Tá a, Dóta ann."))
-    print(morphological_parser("Tá a, tóta ann."))
-    print(morphological_parser("Tá a, Tóta ann."))
-    print(morphological_parser("Tá a, góta ann."))
-    print(morphological_parser("Tá a, Góta ann."))
-    print(morphological_parser("Tá a, póta ann."))
-    print(morphological_parser("Tá a, Póta ann."))
-    print(morphological_parser("Tá a, fóta ann."))
-    print(morphological_parser("Tá a, Fóta ann."))
-    #present tests
-    print("---present test ---")
-    print(morphological_parser("Tá mé anseo"))
-    print(morphological_parser("An bhfuil mé anseo"))
-    print(morphological_parser("Cuireann mé anseo"))
-    print(morphological_parser("Gabhann mé anseo"))
-    print(morphological_parser("Ceannaíonn mé anseo"))
-    print(morphological_parser("Imíonn muid anseo"))
-    print(morphological_parser("Tá muid anseo"))
-    print(morphological_parser("An bhfuil muid anseo"))
-    print(morphological_parser("Cuireann muid anseo"))
-    print(morphological_parser("Gabhann muid anseo"))
-    print(morphological_parser("Ceannaíonn muid anseo"))
-    print(morphological_parser("Imíonn muid anseo"))
-    #future tests
-    print("---future test ---")
-    print(morphological_parser("Bheidh muid anseo"))
-    print(morphological_parser("Gheobhaidh muid anseo"))
-    print(morphological_parser("Ceannóidh muid anseo"))
-    print(morphological_parser("Inseoidh muid anseo"))
-    print(morphological_parser("Suífidh muid anseo"))
-    print("---future dependency test ---")
-    print(morphological_parser("Ní gheobhaidh mé"))
-    print(morphological_parser("Ní gheobhaidh muid"))
-    print(morphological_parser("An gheobhaidh mé"))
-    print(morphological_parser("An gheobhaidh muid"))
-    print(morphological_parser("ní gheobhaidh mé"))
-    print(morphological_parser("ní gheobhaidh muid"))
-    print(morphological_parser("an gheobhaidh mé"))
-    print(morphological_parser("an gheobhaidh muid"))
+    pass
 if __name__ == "__main__":
     main()
