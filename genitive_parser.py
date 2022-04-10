@@ -4,7 +4,13 @@ import re
 def apply_changes(text,error_text,ruleId,message):
     if ruleId == "GENITIVE":
         replace_words = message.replace("consider use of genitive: ","")
-        text = replace_words
+        punct = ""
+        try:
+            if text[-1] in [".",",","?","\"","\'",":",";","!"]:
+                punct = text[-1]
+        except:
+            pass
+        text = replace_words + punct
     return text
 
 def process_errors(text,errors):

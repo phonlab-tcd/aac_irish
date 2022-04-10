@@ -8,13 +8,13 @@ def apply_changes(text,error_text,ruleId,message):
             if word in ["na", "an","Na", "An"]:
                 index += len(word) +1
                 continue
-            elif word[0] in ["a","e","i","o","u","l","n","r","A","E","I","O","U","L","N","R"]:
+            elif word[0] in ["á","é","í","ó","ú","a","e","i","o","u","l","n","r","A","E","I","O","U","Á","É","Í","Ó","Ú","L","N","R"]:
                 index += len(word) +1
                 continue
             else:
                 index +=1
                 break
-        output_text = context[0:index] + "h" + context[index:]
+        output_text = text[0:index] + "h" + text[index:]
         return output_text
     elif ruleId == "NIAITCH" and message == "Unnecessary prefix /h/":
         m10 = re.search("/.*/",message)
@@ -26,7 +26,7 @@ def apply_changes(text,error_text,ruleId,message):
                 break
             else:
                 index += len(word) + 1
-        output_text = context[0:index] + context[index+1:]
+        output_text = text[0:index] + text[index+1:]
         return output_text
     elif ruleId == "CLAOCHLU" and message == "Initial mutation missing":
         context_ = text.split(" ")
