@@ -1,0 +1,22 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "Building a mirror of the Irish AAC written in Python",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OisinThomasMorrin/aac_irish.git"
+  },
+  "author": "Oisín Thomas Morrin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OisinThomasMorrin/aac_irish/issues"
+  },
+  "homepage": "https://github.com/OisinThomasMorrin/aac_irish#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
