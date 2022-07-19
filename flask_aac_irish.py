@@ -23,21 +23,29 @@ def home_page():
 
         #HB added for Julie, test latency
         print(request.form)
-        if "use_corrections" in request.form:
-            if request.form["use_corrections"] == "on":
-                use_corrections = True
+        if "skip_corrections" in request.form:
+            if request.form["skip_corrections"] == "on":
+                skip_corrections = True
             else:
-                use_corrections = False
+                skip_corrections = False
         else:
-            use_corrections = False
-        if "use_cache" in request.form:
-            if request.form["use_cache"] == "on":
-                use_cache = True
+            skip_corrections = False
+        if "skip_cache" in request.form:
+            if request.form["skip_cache"] == "on":
+                skip_cache = True
             else:
-                use_cache = False
+                skip_cache = False
         else:
-            #HB this becomes the default..
-            use_cache = False 
+            skip_cache = False 
+        if "cut_silence" in request.form:
+            if request.form["cut_silence"] == "on":
+                cut_silence = True
+            else:
+                cut_silence = False
+        else:
+            #HB cut silence by default
+            #cut_silence = False 
+            cut_silence = True
         if "audioformat" in request.form:
             audioformat = request.form["audioformat"]
         else:
@@ -45,11 +53,12 @@ def home_page():
 
         
         with timer:
-            if use_cache:
-                mem = synthesise_cache(text,voice_type,use_corrections,audioformat)
+            if skip_cache:
+                mem = synthesise_no_cache(text,voice_type,skip_corrections,audioformat,cut_silence)
             else:
-                mem = synthesise_no_cache(text,voice_type,use_corrections,audioformat)
-        print(f"TIME in synthesise: {timer.elapsed} -  correct: {use_corrections}, cache: {use_cache}, audioformat: {audioformat}, text: {text}", flush=True)
+                mem = synthesise_cache(text,voice_type,skip_corrections,audioformat,cut_silence)
+
+        print(f"TIME in synthesise: {timer.elapsed} -  skip correction: {skip_corrections}, skip cache: {skip_cache}, audioformat: {audioformat}, cut silence: {cut_silence}, text: {text}", flush=True)
             
         return send_file(mem, mimetype="audio/mp3")
     return '''
@@ -64,11 +73,17 @@ def home_page():
              <option value="Munster">Munster</option>
              </select> 
             <p>
-             <label for="use_corrections">Use corrections:</label>
-             <input type="checkbox" id="use_corrections" name="use_corrections"/>
-             <label for="use_cache">Use cache:</label>
-             <input type="checkbox" id="use_cache" name="use_cache" checked/>
- 
+             <label for="skip_corrections">Skip corrections:</label>
+             <input type="checkbox" id="skip_corrections" name="skip_corrections"/>
+             <label for="skip_cache">Skip cache:</label>
+             <input type="checkbox" id="skip_cache" name="skip_cache" checked/>
+             <label for="cut_silence">Cut silence:</label>
+             <input type="checkbox" id="cut_silence" name="cut_silence"/>
+             <label for="audioformat">Audioformat:</label>
+             <select id="audioformat" name="audioformat">
+             <option value="wav">wav</option>
+             <option value="mp3" selected>mp3</option>
+             </select>
             <p><input type=submit value=Submit>
         </form>
         '''
@@ -129,15 +144,19 @@ memory = Memory(location=cachelocation, bytes_limit=100000)
 
 
 @memory.cache    
-def synthesise_cache(text,voice_type,correct=True,audioformat="wav"):
-    return synthesise(text,voice_type,correct,audioformat)
+def synthesise_cache(text,voice_type,skip_corrections=False,audioformat="mp3", cut_silence=False):
+    return synthesise(text,voice_type,skip_corrections,audioformat, cut_silence)
 
 
-def synthesise_no_cache(text,voice_type,correct=True,audioformat="wav"):
-    return synthesise(text,voice_type,correct,audioformat)
+def synthesise_no_cache(text,voice_type,skip_corrections=False,audioformat="mp3", cut_silence=False):
+    return synthesise(text,voice_type,skip_corrections,audioformat,cut_silence)
 
-def synthesise(text,voice_type,correct=True,audioformat="wav"):
-    _, sound_file = tts_corrector(text, voice_type, correct, audioformat)
+def synthesise(text,voice_type,skip_corrections=False,audioformat="mp3", cut_silence=False):
+    print(f"synthesise: skip_corrections: {skip_corrections}")
+    corrected_text, sound_file = tts_corrector(text, voice_type, skip_corrections, audioformat, cut_silence)
+    if not skip_corrections:
+        print(f"Original:\t{text}\nCorrected:\t{corrected_text}")
+
     file = sound_file.json()
     sound = file["audioContent"]
     

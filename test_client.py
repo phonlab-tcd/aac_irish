@@ -4,8 +4,8 @@ timer = ubelt.Timer()
 
 
 
-url = "http://localhost:8001"
-#url = "https://abair.ie/aac_irish"
+#url = "http://localhost:8001"
+url = "https://abair.ie/aac_irish"
 
 
 

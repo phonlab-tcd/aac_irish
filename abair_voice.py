@@ -1,7 +1,7 @@
 import requests
 
 
-def get_voice(text,voice_type,audioformat="wav"):
+def get_voice(text,voice_type,audioformat="mp3",cut_silence=False):
     voices = {"Ulster":"ga_UL_anb_exthts", "Connaught":"ga_CO_pmc_exthts", "Connaught (boy)":"ga_CO_snc_exthts", "Connaught (girl)":"ga_CO_snc_exthts", "Munster":"ga_MU_nnc_exthts"}
     receive = None
     if voice_type == "Connaught (boy)":
@@ -9,7 +9,8 @@ def get_voice(text,voice_type,audioformat="wav"):
     elif voice_type == "Connaught (girl)":
         receive = requests.get(f"https://abair.ie/api2/synthesise?input={text}&voice={voices[voice_type]}&audioEncoding=MP3&timing=WORD&htsParams=-fm%203%20-a%200.45%20-r%200.8")
     elif voice_type == "Ulster":
-        receive = requests.get(f"https://phoneticsrv3.lcs.tcd.ie/nemo/synthesise?outputType=JSON&audioEncoding={audioformat}&voice=snc.multidialect&input={text}")
+        #receive = requests.get(f"https://phoneticsrv3.lcs.tcd.ie/nemo/synthesise?outputType=JSON&audioEncoding={audioformat}&cutSilence={cut_silence}&voice=snc.multidialect&input={text}")
+        receive = requests.get(f"https://phoneticsrv3.lcs.tcd.ie/nemo/synthesise?outputType=JSON&audioEncoding={audioformat}&cutSilence={cut_silence}&voice=anyspeaker&speaker=0&input={text}")
 
     else:
         receive = requests.get(f"https://abair.ie/api2/synthesise?input={text}&voice={voices[voice_type]}&audioEncoding=MP3&timing=WORD")
