@@ -4,8 +4,11 @@ from morphological_parser import morphological_parser
 from genitive_parser import genitive_parser
 
 
-def tts_corrector(text,voice_type):
-    corrected_text = correct_text(text)
+def tts_corrector(text,voice_type, turn_off_corrections=False):
+    if turn_off_corrections:
+        corrected_text = text
+    else:
+        corrected_text = correct_text(text)
     sound_file = get_voice(corrected_text,voice_type)
     return corrected_text, sound_file
 

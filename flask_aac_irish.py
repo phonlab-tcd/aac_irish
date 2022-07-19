@@ -3,6 +3,11 @@ import os
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+#HB for timing
+import ubelt
+timer = ubelt.Timer()
+
+
 @app.route('/', methods=['POST', 'GET'])
 def home_page():
     from flask import request
@@ -10,7 +15,13 @@ def home_page():
         text = request.form['text']
         voice_type = request.form['voice']
         from tts_corrector import tts_corrector
-        _, sound_file = tts_corrector(text, voice_type)
+        #HB added for Julie, test latency
+        turn_off_corrections = True
+
+        with timer:
+            _, sound_file = tts_corrector(text, voice_type, turn_off_corrections)
+        print(f"TIME in tts_corrector: {timer.elapsed} - text: {text}", flush=True)
+            
         file = sound_file.json()
         sound = file["audioContent"]
         import base64
@@ -42,8 +53,10 @@ def corrector():
     from flask import request
     if request.method == 'POST':
         text = request.form['text']
-        from an_gramadoir import correct_errors_in_text
-        corrected_text = correct_errors_in_text(text)
+        #from an_gramadoir import correct_errors_in_text
+        #corrected_text = correct_errors_in_text(text)
+        from tts_corrector import correct_text
+        corrected_text = correct_text(text)
         return {
             "text": corrected_text,
         }
