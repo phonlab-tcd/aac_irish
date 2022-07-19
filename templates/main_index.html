@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+
+    <form method="post">
+        <p><input type=text name=text>
+         <label for="voice">Choose a voice:</label>
+         <select id="voice" name="voice">
+         <option value="irish_1">ga_UL_anb_exthts</option>
+         <option value="irish_2">ga_UL_anb_nnmnkwii</option>
+         <option value="irish_3">ga_CO_pmc_exthts</option>
+         <option value="irish_4">ga_CO_pmg_nnmnkwii</option>
+         <option value="irish_5">ga_CO_snc_exthts</option>
+         <option value="irish_6">ga_CO_snc_nnmnkwii</option>
+         <option value="irish_7">ga_MU_nnc_exthts</option>
+         <option value="irish_8">ga_MU_nnc_nnmnkwii</option>
+         <option value="irish_9">ga_MU_cmg_nnmnkwii</option>
+         </select> 
+        <p><input type=submit value=Submit>
+    </form>
+  <audio controls>
+    <source src="/aac_irish/{{url_for("static",filename=filename)}}" type="audio/mp3">
+  </audio>
+</body>
+
+</html>
