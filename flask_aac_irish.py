@@ -22,6 +22,7 @@ def home_page():
         voice_type = request.form['voice']
 
         #HB added for Julie, test latency
+        print(request.form)
         if "use_corrections" in request.form:
             if request.form["use_corrections"] == "on":
                 use_corrections = True
@@ -35,7 +36,8 @@ def home_page():
             else:
                 use_cache = False
         else:
-            use_cache = True 
+            #HB this becomes the default..
+            use_cache = False 
         if "audioformat" in request.form:
             audioformat = request.form["audioformat"]
         else:
