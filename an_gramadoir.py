@@ -1,11 +1,57 @@
 import requests, re
 
+
+def eclipse(char):
+    uru = {
+        "b": "mb",
+        "c": "gc",
+        "d": "nd",
+        "f": "bhf",
+        "g": "ng",
+        "p": "bp",
+        "t": "dt",
+        "B": "mB",
+        "C": "gC",
+        "D": "nD",
+        "F": "bhF",
+        "G": "nG",
+        "P": "bP",
+        "T": "dT"
+        
+    }
+    if char in uru:
+        return uru[char]
+    else:
+        return char
+    
+    
+
 def apply_changes(text,error_text,ruleId,message):
-    if ruleId == "SEIMHIU" and message == "Lenition missing":
+    if ruleId == "URU" and message == "Eclipsis missing":
+        #Added 220802 by Harald, should be cleaned up!
         context = text.split(" ")
         index = 0
         for word in context:
-            if word in ["na", "an","Na", "An"]:
+            if word in ["na", "an","Na", "An", "I", "i"]:
+                index += len(word) +1
+                continue
+            elif word[0] in ["á","é","í","ó","ú","a","e","i","o","u","l","n","r","A","E","I","O","U","Á","É","Í","Ó","Ú","L","N","R"]:
+                index += len(word) +1
+                continue
+            else:
+                index +=1
+                break
+        #print(text[0:index-1])
+        #print(text[index-1])
+        #print(text[index:])        
+        output_text = text[0:index-1] + eclipse(text[index-1]) + text[index:]
+        return output_text
+
+    elif ruleId == "SEIMHIU" and message == "Lenition missing":
+        context = text.split(" ")
+        index = 0
+        for word in context:
+            if word in ["na", "an","Na", "An", "Sa", "sa"]:
                 index += len(word) +1
                 continue
             elif word[0] in ["á","é","í","ó","ú","a","e","i","o","u","l","n","r","A","E","I","O","U","Á","É","Í","Ó","Ú","L","N","R"]:
@@ -36,7 +82,7 @@ def apply_changes(text,error_text,ruleId,message):
         for word in context_:
             if word == "":
                 continue
-            if word in ["na", "an","Na", "An"]:
+            if word in ["na", "an","Na", "An", "Sa", "sa"]:
                 index += len(word) +1
                 continue
             elif word[0] in ["a","e","i","o","u","l","n","r","A","E","I","O","U","L","N","R"]:
