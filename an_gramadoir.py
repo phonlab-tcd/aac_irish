@@ -51,7 +51,7 @@ def apply_changes(text,error_text,ruleId,message):
         context = text.split(" ")
         index = 0
         for word in context:
-            if word in ["na", "an","Na", "An", "Sa", "sa"]:
+            if word in ["na", "an","Na", "An", "Sa", "sa", "Mo", "mo", "Do", "do"]:
                 index += len(word) +1
                 continue
             elif word[0] in ["á","é","í","ó","ú","a","e","i","o","u","l","n","r","A","E","I","O","U","Á","É","Í","Ó","Ú","L","N","R"]:
