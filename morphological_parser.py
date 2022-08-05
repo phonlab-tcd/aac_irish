@@ -178,9 +178,10 @@ def adjective_correction(text):
                 elif text_words_copy[index+1+past_offset] == "gearr":
                     text_words[index+1+past_offset] = "giorra"
                 elif text_words_copy[index+1+past_offset] == "leathan":
-                    text_words[index+1+past_offset] = "leithne"
-                elif text_words_copy[index+1+past_offset] == "maith":
-                    text_words[index+1+past_offset] = "fearr"
+                    text_words[index+1+past_offset] = "leithne"            
+                #elif text_words_copy[index+1+past_offset] == "maith":
+                    #HB 220805 Turned off is maith liom -> is fearr liom
+                    #text_words[index+1+past_offset] = "fearr"
                 elif text_words_copy[index+1+past_offset] == "mór":
                     text_words[index+1+past_offset] = "mó"
                 elif text_words_copy[index+1+past_offset] == "olc":

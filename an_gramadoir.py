@@ -160,6 +160,7 @@ def an_gramadoir(text):
     url = 'https://abair.ie/cgi-bin/api-gramadoir-1.0.pl'
     myobj = {'teanga': 'en',"teacs":f"{text}"}
     errors = requests.post(url, data = myobj).json()
+    print(errors)
     return text, errors
 
 def an_gramadoir_parser(text):
