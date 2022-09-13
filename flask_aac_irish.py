@@ -104,7 +104,7 @@ def home_page():
                 gen = correctedText[0]
                 morph = correctedText[1]
                 gram = correctedText[2]
-                correctedText = f"MORPH: {morph}</p><p>GRAM: {gram}</p><p>GEN: {gen}"
+                correctedText = f"INPUT: {text}</p><p>MORPH: {morph}</p><p>GRAM: {gram}</p><p>GEN: {gen}"
             #return {"encodedAudio":encodedAudio, "correctedText":correctedText}
             return input_form + f'<p>{correctedText}<p><audio controls autoplay><source src="data:audio/{audioformat};base64,{encodedAudio}"/></audio>'
             
