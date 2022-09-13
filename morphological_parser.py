@@ -94,6 +94,10 @@ def verb_correction(text):
     return text
 
 def possessive_pronoun_correction(text):
+    #HB is it ever possible to be certain about these?
+    #ERROR: rang a sé -> rang a shé
+    #return text
+    
     seimhiu = "[B|b|C|c|D|d|F|f|G|g|M|m|P|p|S|s|T|t]"
     vowel = "[A|a|O|o|U|u|I|i|E|e|Á|É|Í|Ó|Ú|á|é|í|ó|ú]"
     b = "[B|b]"
@@ -103,7 +107,7 @@ def possessive_pronoun_correction(text):
     g = "[G|g]"
     p = "[P|p]"
     f = "[F|f]"
-    #his
+    #his    
     text = re.sub(f" a ({seimhiu})", " a \g<1>h", text)
     #her
     text = re.sub(f" a\' ({vowel})", " a h\g<1>", text)
@@ -223,6 +227,19 @@ def morphological_parser(text):
     return text
 
 def main():
-    pass
+    #pass
+    #HB added for testing
+    import sys
+    text = sys.argv[1]
+    print(f"INPUT: {text}")
+    res = verb_correction(text)
+    print(f"VERB:  {res}")
+    res = possessive_pronoun_correction(res)
+    print(f"POSS:  {res}")
+    res = adjective_correction(res)
+    print(f"ADJ:   {res}")
+
+
+
 if __name__ == "__main__":
     main()
