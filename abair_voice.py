@@ -10,7 +10,9 @@ def get_voice(text,voice_type,audioformat="mp3",cut_silence=False):
         receive = requests.get(f"https://abair.ie/api2/synthesise?input={text}&voice={voices[voice_type]}&audioEncoding=MP3&timing=WORD&htsParams=-fm%203%20-a%200.45%20-r%200.8")
     elif voice_type == "Ulster":
         #receive = requests.get(f"https://phoneticsrv3.lcs.tcd.ie/nemo/synthesise?outputType=JSON&audioEncoding={audioformat}&cutSilence={cut_silence}&voice=snc.multidialect&input={text}")
-        receive = requests.get(f"https://phoneticsrv3.lcs.tcd.ie/nemo/synthesise?outputType=JSON&audioEncoding={audioformat}&cutSilence={cut_silence}&voice=anyspeaker&speaker=0&input={text}")
+        url = f"https://phoneticsrv3.lcs.tcd.ie/nemo/synthesise?outputType=JSON&audioEncoding={audioformat}&cutSilence={cut_silence}&voice=anyspeaker&speaker=0&input={text}"
+        print(url)
+        receive = requests.get(url)
 
     else:
         receive = requests.get(f"https://abair.ie/api2/synthesise?input={text}&voice={voices[voice_type]}&audioEncoding=MP3&timing=WORD")

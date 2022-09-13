@@ -25,4 +25,7 @@ Corrected:      Is fearr liom ba mhhaith liom
 _________________________________________________synthesise_cache - 2.7s, 0.0min
 TIME in synthesise: 2.7177788205444813 -  skip correction: False, skip cache: False, audioformat: mp3, cut silence: True, text: Is maith liom ba mhaith liom
 
+commented two line causing this in morphological_parser.py
+
+
 Andy: "sí," works, "sí." doesn't - maybe add comma to single words? TEST 
