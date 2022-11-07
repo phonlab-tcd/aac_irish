@@ -13,6 +13,13 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 import ubelt
 timer = ubelt.Timer()
 
+from flask_cors import CORS
+CORS(app)
+
+
+
+
+
 input_form = '''
 <form method="post">
 <p><input type=text name=text>
