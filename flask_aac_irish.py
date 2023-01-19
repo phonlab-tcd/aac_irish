@@ -18,14 +18,15 @@ CORS(app)
 
 
 
-
+#HB The Sibéal NeMo voice is still called "Ulster" - because it is in the call from coughcrop!
+#So to change voice at the moment we need to call it "Ulster" no matter what. At some point this can be corrected - when coughdrop is dropped or the call changed.
 
 input_form = '''
 <form method="post">
 <p><input type=text name=text>
 <label for="voice">Choose a voice:</label>
 <select id="voice" name="voice">
-<option value="Ulster">Ulster</option>
+<option value="Ulster">Connaught (girl) (Nemo voice)</option>
 <option value="Connaught">Connaught</option>
 <option value="Connaught (girl)">Connaught (girl)</option>
 <option value="Connaught (boy)">Connaught (boy)</option>
@@ -150,22 +151,24 @@ def voice():
         from tts_corrector import tts_corrector_with_hts_params
         _, sound_file = tts_corrector_with_hts_params(text, voice_type,alpha,all_pass_filter)
         file = sound_file.json()
-        print(file)
         sound = file["audioContent"]
-        import base64
-        sound_ = base64.b64decode(sound)
-        import io
-        mem = io.BytesIO()
-        mem.write(sound_)
-        mem.seek(0)
-        from datetime import datetime
-        now = datetime.now()
-        date_time = now.strftime("%m%d%Y%H%M%S")
-        filename = f"sound_{date_time}.mp3"
-        filename_to_save = os.path.join(basedir,"static/sounds", filename)
-        with open(filename_to_save, "wb") as file_to_save:
-            file_to_save.write(sound_)
-        return render_template("index.html",filename=f"/sounds/{filename}")
+        #HB no need to save audio? Or is there?
+        # import base64
+        # sound_ = base64.b64decode(sound)
+        # import io
+        # mem = io.BytesIO()
+        # mem.write(sound_)
+        # mem.seek(0)
+        # from datetime import datetime
+        # now = datetime.now()
+        # date_time = now.strftime("%m%d%Y%H%M%S")
+        # filename = f"sound_{date_time}.mp3"
+        # filename_to_save = os.path.join(basedir,"static/sounds", filename)
+        # with open(filename_to_save, "wb") as file_to_save:
+        #     file_to_save.write(sound_)
+        #return render_template("index.html",filename=f"/sounds/{filename}")
+        audioformat = "mp3"
+        return render_template("index.html",audiosrc=f"data:audio/{audioformat};base64,{sound}")
     return render_template("index.html")
 
 

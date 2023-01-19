@@ -35,7 +35,9 @@
     <p><input type=submit value=Submit>
   </form>
   <audio controls>
-    <source src="{{url_for("static",filename=filename)}}" type="audio/mp3">
+    <!--<source src="{{url_for("static",filename=filename)}}" type="audio/mp3">-->
+      <!-- HB no need to save tha audio? -->
+      <source src="{{audiosrc}}" type="audio/mp3">
   </audio>
 </body>
 
