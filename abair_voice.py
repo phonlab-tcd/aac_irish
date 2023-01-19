@@ -1,7 +1,7 @@
 import requests
 
 
-def get_voice(text,voice_type,audioformat="mp3",cut_silence=False):
+def get_voice(text,voice_type,audioformat="MP3",cut_silence=False):
     voices = {"Ulster":"ga_UL_anb_exthts", "Connaught":"ga_CO_pmc_exthts", "Connaught (boy)":"ga_CO_snc_exthts", "Connaught (girl)":"ga_CO_snc_exthts", "Munster":"ga_MU_nnc_exthts"}
     receive = None
     if voice_type == "Connaught (boy)":
@@ -25,8 +25,9 @@ def get_voice_hts_params(text,voice_type,alpha,all_pass_filter):
 
 
 def main():
-    x = get_voice("Dia duit","irish_4")
-    print(x)
+    #x = get_voice("Dia duit","Ulster")
+    x = get_voice_hts_params("Dia duit","irish_7", 0.4, 0)
+    print(x.json())
 
 if __name__ == "__main__":
     main()

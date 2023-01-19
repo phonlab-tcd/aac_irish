@@ -19,7 +19,11 @@ def tts_corrector(text,voice_type, skip_corrections=False, audioformat="mp3", cu
 
 def tts_corrector_with_hts_params(text,voice_type,alpha,all_pass_filter):
     corrected_text = correct_text(text)
-    sound_file = get_voice_hts_params(corrected_text,voice_type,alpha,all_pass_filter)
+    #HB changed to be able to display the correction steps
+    if len(corrected_text) == 3:
+        sound_file = get_voice_hts_params(corrected_text[0],voice_type,alpha,all_pass_filter)
+    else:
+        sound_file = get_voice_hts_params(corrected_text,voice_type,alpha,all_pass_filter)
     return corrected_text, sound_file
 
 def correct_text(text):

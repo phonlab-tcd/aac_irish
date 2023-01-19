@@ -43,7 +43,7 @@ input_form = '''
 <label for="audioformat">Audioformat:</label>
 <select id="audioformat" name="audioformat">
 <option value="wav">wav</option>
-<option value="mp3" selected>mp3</option>
+<option value="MP3" selected>mp3</option>
 </select>
 <p><input type=submit value=Submit>
 </form>
@@ -150,6 +150,7 @@ def voice():
         from tts_corrector import tts_corrector_with_hts_params
         _, sound_file = tts_corrector_with_hts_params(text, voice_type,alpha,all_pass_filter)
         file = sound_file.json()
+        print(file)
         sound = file["audioContent"]
         import base64
         sound_ = base64.b64decode(sound)
@@ -182,13 +183,14 @@ def synthesise_cache(text,voice_type,skip_corrections=False,audioformat="mp3", c
 def synthesise_no_cache(text,voice_type,skip_corrections=False,audioformat="mp3", cut_silence=False):
     return synthesise(text,voice_type,skip_corrections,audioformat,cut_silence)
 
-def synthesise(text,voice_type,skip_corrections=False,audioformat="mp3", cut_silence=False):
+def synthesise(text,voice_type,skip_corrections=False,audioformat="MP3", cut_silence=False):
     print(f"synthesise: skip_corrections: {skip_corrections}")
     corrected_text, sound_file = tts_corrector(text, voice_type, skip_corrections, audioformat, cut_silence)
     if not skip_corrections:
         print(f"Original:\t{text}\nCorrected:\t{corrected_text}")
 
     file = sound_file.json()
+    print(file)
     sound = file["audioContent"]
     
     sound_ = base64.b64decode(sound)
